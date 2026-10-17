@@ -6,9 +6,11 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import Register from "./components/Register";
 import { useState } from "react";
 import Login from "./components/login";
 import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(
@@ -32,14 +34,15 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            loggedIn ? (
+            <ProtectedRoute>
               <Dashboard />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/register"
+          element={<Register />}
+        />
         <Route
           path="*"
           element={
