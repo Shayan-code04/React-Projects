@@ -1,9 +1,10 @@
-function JobCard({ company, role }) {
+function JobCard({ company, role, status }) {
   return (
-    <div>
+    <article>
       <h2>{company}</h2>
-      <p>{role}</p>
-    </div>
+      <p>Role: {role}</p>
+      <p>Status: {status || "Not specified"}</p>
+    </article>
   );
 }
 
