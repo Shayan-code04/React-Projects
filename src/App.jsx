@@ -6,8 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Register from "./components/Register";
 import { useState } from "react";
+import Register from "./components/Register";
 import Login from "./components/login";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -39,10 +39,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/register"
           element={<Register />}
         />
+
         <Route
           path="*"
           element={

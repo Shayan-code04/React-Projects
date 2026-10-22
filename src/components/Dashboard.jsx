@@ -3,12 +3,31 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import JobCard from "./JobCard";
 import HealthBadge from "./HealthBadge";
+import JobForm from "../JobForm";
 import api from "../api";
 
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  function handleJobCreated(newJob) {
+    setJobs((previousJobs) => [...previousJobs, newJob]);
+  }
+
+  function handleJobUpdated(updatedJob) {
+    setJobs((previousJobs) =>
+      previousJobs.map((job) =>
+        job.id === updatedJob.id ? updatedJob : job
+      )
+    );
+  }
+
+  function handleJobDeleted(jobId) {
+    setJobs((previousJobs) =>
+      previousJobs.filter((job) => job.id !== jobId)
+    );
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -24,18 +43,21 @@ function Dashboard() {
 
         if (!cancelled) {
           setJobs(data);
+          setError("");
         }
-      } catch (error) {
+      } catch (err) {
         if (cancelled) return;
 
-        if (error.response?.status === 401) {
+        if (err.response?.status === 401) {
           localStorage.removeItem("access_token");
           setError("Your session expired. Please log in again.");
         } else {
+          const detail = err.response?.data?.detail;
+
           setError(
-            error.response?.data?.detail ||
-              error.message ||
-              "Could not load jobs."
+            typeof detail === "string"
+              ? detail
+              : err.message || "Could not load jobs."
           );
         }
       } finally {
@@ -55,19 +77,23 @@ function Dashboard() {
   return (
     <div>
       <Header />
+      <h1>My Jobs</h1>
+
+      <JobForm onJobCreated={handleJobCreated} />
 
       {error && <p role="alert">{error}</p>}
 
       {loading ? (
         <p>Loading jobs...</p>
       ) : error ? null : jobs.length === 0 ? (
-        <p>No jobs found.</p>
+        <p>No jobs found. Add your first job above!</p>
       ) : (
         jobs.map((job) => (
           <JobCard
             key={job.id}
-            company={job.company}
-            role={job.role}
+            job={job}
+            onJobUpdated={handleJobUpdated}
+            onJobDeleted={handleJobDeleted}
           />
         ))
       )}
