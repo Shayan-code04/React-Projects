@@ -1,0 +1,26 @@
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.analytics-card {
+  padding: 20px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.analytics-card h3 {
+  font-size: 15px;
+  color: #475569;
+}
+
+.analytics-card p {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f172a;
+}
+

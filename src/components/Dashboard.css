@@ -1,0 +1,45 @@
+
+
+.job-list {
+  margin: 16px 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #10101433;
+}
+
+.skeleton {
+  background: #3d1e66;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 45%;
+}
+
+.skeleton-text {
+  height: 12px;
+  width: 75%;
+}
+
+.skeleton-button {
+  height: 32px;
+  width: 110px;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

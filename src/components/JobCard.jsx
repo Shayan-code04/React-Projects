@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import api from "../api";
+import "./JobCard.css";
 
 function JobCard({ job, onJobUpdated, onJobDeleted }) {
   const [status, setStatus] = useState(job.status || "applied");
@@ -26,12 +27,19 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
         err.response?.data || err.message
       );
 
-      const detail = err.response?.data?.detail;
-      setError(
-        typeof detail === "string"
-          ? detail
-          : JSON.stringify(detail ?? err.message)
-      );
+      const statusCode = err.response?.status;
+
+       if (statusCode === 401) {
+          setError("Your session has expired. Please log in again.");
+        } else if (statusCode === 404) {
+          setError("This job could not be found. It may have been deleted.");
+        } else if (statusCode === 422) {
+          setError("Some information is invalid. Please check your input.");
+        } else if (statusCode >= 500) {
+          setError("Something went wrong on our server. Please try again.");
+        } else {
+          setError("Unable to complete your request. Please try again.");
+        }
     } finally {
       setLoading(false);
     }
@@ -116,7 +124,11 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
         {deleting ? "Deleting..." : "Delete Job"}
       </button>
 
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p className="error-message" role="alert">
+            ⚠️ {error}
+        </p>
+      )}
     </article>
   );
 }

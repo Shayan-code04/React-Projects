@@ -1,20 +1,26 @@
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import Header from "./Header";
 import JobCard from "./JobCard";
 import HealthBadge from "./HealthBadge";
-import JobForm from "../JobForm";
+import JobForm from "../jobform";
 import api from "../api";
+
+import "./Dashboard.css";
 
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Add a newly created job
   function handleJobCreated(newJob) {
     setJobs((previousJobs) => [...previousJobs, newJob]);
   }
 
+  // Update an existing job
   function handleJobUpdated(updatedJob) {
     setJobs((previousJobs) =>
       previousJobs.map((job) =>
@@ -23,12 +29,14 @@ function Dashboard() {
     );
   }
 
+  // Delete a job
   function handleJobDeleted(jobId) {
     setJobs((previousJobs) =>
       previousJobs.filter((job) => job.id !== jobId)
     );
   }
 
+  // Fetch jobs when Dashboard loads
   useEffect(() => {
     let cancelled = false;
 
@@ -75,27 +83,62 @@ function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="dashboard">
       <Header />
-      <h1>My Jobs</h1>
+
+      <div className="dashboard-header">
+        <h1>My Jobs</h1>
+
+        <Link to="/analytics" className="analytics-link">
+          View Analytics
+        </Link>
+      </div>
 
       <JobForm onJobCreated={handleJobCreated} />
 
-      {error && <p role="alert">{error}</p>}
+      {/* Error state */}
+      {error && (
+        <p className="dashboard-error" role="alert">
+          {error}
+        </p>
+      )}
 
+      {/* Loading skeleton */}
       {loading ? (
-        <p>Loading jobs...</p>
+        <div aria-label="Loading jobs" aria-busy="true">
+          {[1, 2, 3].map((item) => (
+            <div className="skeleton-card" key={item}>
+              <div className="skeleton skeleton-title"></div>
+              <div className="skeleton skeleton-text"></div>
+              <div className="skeleton skeleton-text"></div>
+              <div className="skeleton skeleton-button"></div>
+            </div>
+          ))}
+        </div>
       ) : error ? null : jobs.length === 0 ? (
-        <p>No jobs found. Add your first job above!</p>
+
+        /* Empty state */
+        <div className="empty-state">
+          <h2>No applications yet</h2>
+          <p>
+            Start tracking your job applications by adding
+            your first job above.
+          </p>
+        </div>
+
       ) : (
-        jobs.map((job) => (
-          <JobCard
-            key={job.id}
-            job={job}
-            onJobUpdated={handleJobUpdated}
-            onJobDeleted={handleJobDeleted}
-          />
-        ))
+
+        /* Display job cards */
+        <div className="job-list">
+          {jobs.map((job) => (
+            <JobCard
+              key={job.id}
+              job={job}
+              onJobUpdated={handleJobUpdated}
+              onJobDeleted={handleJobDeleted}
+            />
+          ))}
+        </div>
       )}
 
       <HealthBadge />

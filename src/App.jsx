@@ -10,6 +10,7 @@ import { useState } from "react";
 import Register from "./components/Register";
 import Login from "./components/login";
 import Dashboard from "./components/Dashboard";
+import Analytics from "./components/Analytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -36,6 +37,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
             </ProtectedRoute>
           }
         />
