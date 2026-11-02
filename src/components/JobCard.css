@@ -1,9 +1,140 @@
+
+/* Individual job card */
+
+.job-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-bottom: 16px;
+
+  background: #1c1d25;
+  border: 1px solid #2e303a;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Job information */
+
+.job-card-header h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+  overflow-wrap: anywhere;
+}
+
+.job-role,
+.job-current-status {
+  margin: 0;
+  color: #a1a1aa;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* Form fields */
+
+.job-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.job-field label {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.job-field input,
+.job-field select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 12px;
+
+  color: #f3f4f6;
+  background: #16171d;
+  border: 1px solid #3b3d49;
+  border-radius: 7px;
+}
+
+.job-field input:focus,
+.job-field select:focus {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Action buttons */
+
+.job-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.job-card-actions button {
+  flex: 1;
+  min-width: 110px;
+  padding: 11px 14px;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.save-button {
+  background: #0b4246;
+}
+
+.delete-button {
+  background: #4e1150;
+}
+
+.job-card-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Error message */
+
 .error-message {
-  color: #dc2626;
-  background-color: #fee2e2;
-  border: 1px solid #fca5a5;
+  color: #fca5a5;
+  background-color: #451a1a;
+  border: 1px solid #991b1b;
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 14px;
-  margin-top: 10px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+  .job-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .job-card-header h2 {
+    font-size: 19px;
+  }
+
+  .job-card-actions {
+    flex-direction: column;
+  }
+
+  .job-card-actions button {
+    width: 100%;
+    min-height: 42px;
+  }
 }

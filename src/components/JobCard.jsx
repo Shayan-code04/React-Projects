@@ -10,6 +10,7 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
 
+  // Update an existing job
   async function handleUpdate() {
     setLoading(true);
     setError("");
@@ -29,22 +30,23 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
 
       const statusCode = err.response?.status;
 
-       if (statusCode === 401) {
-          setError("Your session has expired. Please log in again.");
-        } else if (statusCode === 404) {
-          setError("This job could not be found. It may have been deleted.");
-        } else if (statusCode === 422) {
-          setError("Some information is invalid. Please check your input.");
-        } else if (statusCode >= 500) {
-          setError("Something went wrong on our server. Please try again.");
-        } else {
-          setError("Unable to complete your request. Please try again.");
-        }
+      if (statusCode === 401) {
+        setError("Your session has expired. Please log in again.");
+      } else if (statusCode === 404) {
+        setError("This job could not be found. It may have been deleted.");
+      } else if (statusCode === 422) {
+        setError("Some information is invalid. Please check your input.");
+      } else if (statusCode >= 500) {
+        setError("Something went wrong on our server. Please try again.");
+      } else {
+        setError("Unable to complete your request. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
   }
 
+  // Delete an existing job
   async function handleDelete() {
     const confirmed = window.confirm(
       `Are you sure you want to delete the job at ${job.company}?`
@@ -65,6 +67,7 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
       );
 
       const detail = err.response?.data?.detail;
+
       setError(
         typeof detail === "string"
           ? detail
@@ -76,59 +79,89 @@ function JobCard({ job, onJobUpdated, onJobDeleted }) {
   }
 
   return (
-    <article>
-      <h2>{job.company}</h2>
-      <p>Role: {job.position || "Not specified"}</p>
-      <p>Current status: {job.status || "Not specified"}</p>
+    <article className="job-card">
 
-      <label>
-        Change status:
-        <select
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
+      {/* Job information */}
+      <div className="job-card-header">
+        <h2>{job.company}</h2>
+        <p className="job-role">
+          Role: {job.position || "Not specified"}
+        </p>
+      </div>
+
+      <p className="job-current-status">
+        Current status: {job.status || "Not specified"}
+      </p>
+
+      {/* Change status */}
+      <div className="job-card-fields">
+
+        <div className="job-field">
+          <label htmlFor={`status-${job.id}`}>
+            Change status
+          </label>
+
+          <select
+            id={`status-${job.id}`}
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+            disabled={loading || deleting}
+          >
+            <option value="applied">Applied</option>
+            <option value="interviewing">Interviewing</option>
+            <option value="offered">Offered</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        {/* Notes */}
+        <div className="job-field">
+          <label htmlFor={`notes-${job.id}`}>
+            Notes
+          </label>
+
+          <input
+            id={`notes-${job.id}`}
+            type="text"
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            disabled={loading || deleting}
+            placeholder="Add notes..."
+          />
+        </div>
+
+      </div>
+
+      {/* Action buttons */}
+      <div className="job-card-actions">
+
+        <button
+          className="save-button"
+          type="button"
+          onClick={handleUpdate}
           disabled={loading || deleting}
         >
-          <option value="applied">Applied</option>
-          <option value="interviewing">Interviewing</option>
-          <option value="offered">Offered</option>
-          <option value="rejected">Rejected</option>
-        </select>
-      </label>
+          {loading ? "Saving..." : "Save Changes"}
+        </button>
 
-      <br />
-
-      <label>
-        Notes:
-        <input
-          value={notes}
-          onChange={(event) => setNotes(event.target.value)}
+        <button
+          className="delete-button"
+          type="button"
+          onClick={handleDelete}
           disabled={loading || deleting}
-        />
-      </label>
+        >
+          {deleting ? "Deleting..." : "Delete Job"}
+        </button>
 
-      <br />
+      </div>
 
-      <button
-        type="button"
-        onClick={handleUpdate}
-        disabled={loading || deleting}
-      >
-        {loading ? "Saving..." : "Save Changes"}
-      </button>
-
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={loading || deleting}
-      >
-        {deleting ? "Deleting..." : "Delete Job"}
-      </button>
-
+      {/* Error message */}
       {error && (
         <p className="error-message" role="alert">
-            ⚠️ {error}
+          ⚠️ {error}
         </p>
       )}
+
     </article>
   );
 }

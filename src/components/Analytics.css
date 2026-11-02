@@ -1,26 +1,132 @@
 
+/* Main analytics container */
+
+.analytics-page {
+  width: 100%;
+  max-width: 1126px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Heading */
+
+.analytics-header {
+  margin-bottom: 24px;
+}
+
+.analytics-header h1 {
+  font-size: 30px;
+  margin: 0 0 8px;
+  color: #f3f4f6;
+}
+
+.analytics-header p {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Statistics grid */
+
 .analytics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-top: 20px;
 }
 
+/* Individual cards */
+
 .analytics-card {
+  min-width: 0;
+  box-sizing: border-box;
   padding: 20px;
-  border-radius: 10px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+
+  background: #1c1d25;
+  border: 1px solid #2e303a;
+  border-radius: 12px;
+
+  transition: border-color 0.2s ease;
+}
+
+.analytics-card:hover {
+  border-color: #7c3aed;
 }
 
 .analytics-card h3 {
-  font-size: 15px;
-  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9ca3af;
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
 }
 
 .analytics-card p {
-  font-size: 28px;
-  font-weight: bold;
-  color: #0f172a;
+  font-size: 30px;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Loading and empty states */
+
+.analytics-message,
+.analytics-empty {
+  padding: 24px;
+  color: #9ca3af;
+}
+
+.analytics-empty h1 {
+  color: #f3f4f6;
+}
+
+/* Error state */
+
+.analytics-error {
+  padding: 14px;
+  color: #fca5a5;
+  background: #451a1a;
+  border: 1px solid #991b1b;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+  .analytics-page {
+    padding: 18px;
+  }
+
+  .analytics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .analytics-page {
+    padding: 12px;
+  }
+
+  .analytics-header h1 {
+    font-size: 25px;
+  }
+
+  .analytics-card {
+    padding: 14px;
+  }
+
+  .analytics-card h3 {
+    font-size: 12px;
+  }
+
+  .analytics-card p {
+    font-size: 25px;
+  }
 }
 

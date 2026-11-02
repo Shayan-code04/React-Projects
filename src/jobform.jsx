@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import api from "./api";
+import "./JobForm.css";
 
 function JobForm({ onJobCreated }) {
   const [title, setTitle] = useState("");
@@ -43,38 +44,50 @@ function JobForm({ onJobCreated }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="job-form" onSubmit={handleSubmit}>
       <h2>Add a Job</h2>
 
-      <label>
-        Job title
-        <input
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          placeholder="Enter job title"
-          required
-        />
-      </label>
+      <div className="job-form-fields">
+        <div className="job-form-field">
+          <label htmlFor="job-title">Job title</label>
+          <input
+            id="job-title"
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            placeholder="Enter job title"
+            required
+            disabled={loading}
+          />
+        </div>
 
-      <br />
+        <div className="job-form-field">
+          <label htmlFor="job-company">Company</label>
+          <input
+            id="job-company"
+            type="text"
+            value={company}
+            onChange={(event) => setCompany(event.target.value)}
+            placeholder="Enter company name"
+            required
+            disabled={loading}
+          />
+        </div>
+      </div>
 
-      <label>
-        Company
-        <input
-          value={company}
-          onChange={(event) => setCompany(event.target.value)}
-          placeholder="Enter company name"
-          required
-        />
-      </label>
-
-      <br />
-
-      <button type="submit" disabled={loading}>
+      <button
+        className="add-job-button"
+        type="submit"
+        disabled={loading}
+      >
         {loading ? "Adding..." : "Add Job"}
       </button>
 
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p className="job-form-error" role="alert">
+          {error}
+        </p>
+      )}
     </form>
   );
 }

@@ -1,10 +1,81 @@
 
+/* Main dashboard container */
+.dashboard {
+  width: 100%;
+  max-width: 1126px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
+/* Dashboard heading and analytics link */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.analytics-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #1d1c1f;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Job list */
 .job-list {
   margin: 16px 0;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #2e303a;
   border-radius: 10px;
   background: #10101433;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Empty state */
+.empty-state {
+  padding: 32px 16px;
+  text-align: center;
+  border: 1px solid #2e303a;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.empty-state h2 {
+  font-size: 22px;
+}
+
+.empty-state p {
+  overflow-wrap: anywhere;
+}
+
+/* Error message */
+.dashboard-error {
+  color: #f87171;
+  padding: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* Loading skeleton */
+.skeleton-card {
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #2e303a;
+  border-radius: 10px;
 }
 
 .skeleton {
@@ -41,5 +112,30 @@
 @media (prefers-reduced-motion: reduce) {
   .skeleton {
     animation: none;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 12px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
+
+  .analytics-link {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .empty-state {
+    padding: 24px 12px;
   }
 }

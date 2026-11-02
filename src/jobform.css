@@ -1,0 +1,118 @@
+
+/* Main form */
+
+.job-form {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-bottom: 24px;
+
+  background: #1c1d25;
+  border: 1px solid #2e303a;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.job-form h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #f3f4f6;
+}
+
+/* Input fields */
+
+.job-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.job-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.job-form-field label {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.job-form-field input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px;
+
+  background: #16171d;
+  color: #f3f4f6;
+
+  border: 1px solid #3b3d49;
+  border-radius: 7px;
+}
+
+.job-form-field input:focus {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+.job-form-field input:disabled {
+  opacity: 0.6;
+}
+
+/* Add button */
+
+.add-job-button {
+  width: 100%;
+  padding: 12px;
+
+  background: #6d28d9;
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-job-button:hover:not(:disabled) {
+  background: #7c3aed;
+}
+
+.add-job-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error message */
+
+.job-form-error {
+  margin: 0;
+  padding: 10px;
+  color: #fca5a5;
+  background: #451a1a;
+  border: 1px solid #991b1b;
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .job-form {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .job-form h2 {
+    font-size: 20px;
+  }
+
+  .job-form-field input {
+    padding: 11px;
+  }
+}
